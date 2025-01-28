@@ -1,3 +1,4 @@
+const { Sequelize, DataTypes} = require("sequelize");
 const sequelize = require("../../config/database");
 
 module.exports = sequelize.define('project', {
@@ -5,10 +6,10 @@ module.exports = sequelize.define('project', {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    type: Sequelize.INTEGER
+    type: DataTypes.INTEGER,
   },
   title: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     validate: {
       notNull: {
@@ -20,7 +21,7 @@ module.exports = sequelize.define('project', {
     }
   },
   isFeatured: {
-    type: Sequelize.STRING,
+    type: DataTypes.BOOLEAN,
     defaultValue: false,
     allowNull: false,
     validate: {
@@ -31,7 +32,7 @@ module.exports = sequelize.define('project', {
     }
   },
   productImage: {
-    type: Sequelize.ARRAY(Sequelize.STRING),
+    type: DataTypes.ARRAY(DataTypes.STRING),
     allowNull: false,
     validate: {
       notNull: {
@@ -43,7 +44,7 @@ module.exports = sequelize.define('project', {
     }
   },
   price: {
-    type: Sequelize.DECIMAL,
+    type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
     validate: {
       notNull: {
@@ -55,7 +56,7 @@ module.exports = sequelize.define('project', {
     }
   },
   shortDescription: {
-    type: Sequelize.TEXT,
+    type: DataTypes.TEXT,
     allowNull: false,
     validate: {
       notNull: {
@@ -67,7 +68,7 @@ module.exports = sequelize.define('project', {
     }
   },
   description: {
-    type: Sequelize.TEXT,
+    type: DataTypes.TEXT,
     allowNull: false,
     validate: {
       notNull: {
@@ -79,7 +80,7 @@ module.exports = sequelize.define('project', {
     }
   },
   productUrl: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
     validate: {
       notNull: {
@@ -94,7 +95,8 @@ module.exports = sequelize.define('project', {
     }
   },
   category: {
-    type: Sequelize.ARRAY(Sequelize.STRING),
+    type: DataTypes.ARRAY(DataTypes.STRING),
+    allowNull: false,
     validate: {
       notNull: {
         msg: 'category can not be null',
@@ -105,7 +107,8 @@ module.exports = sequelize.define('project', {
     }
   },
   tags: {
-    type: Sequelize.ARRAY(Sequelize.STRING),
+    type: DataTypes.ARRAY(DataTypes.STRING),
+    allowNull: false,
     validate: {
       notNull: {
         msg: 'tags can not be null',
@@ -116,7 +119,7 @@ module.exports = sequelize.define('project', {
     }
   },
   createdBy: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     references: {
       model: 'user',
       key: 'id',
@@ -124,16 +127,17 @@ module.exports = sequelize.define('project', {
   },
   createdAt: {
     allowNull: false,
-    type: Sequelize.DATE
+    type: DataTypes.DATE
   },
   updatedAt: {
     allowNull: false,
-    type: Sequelize.DATE
+    type: DataTypes.DATE
   },
 },
 {
   paranoid: true,
   freezeTableName: true,
   modelName: 'project',
+  timestamps: true,
 }
 );

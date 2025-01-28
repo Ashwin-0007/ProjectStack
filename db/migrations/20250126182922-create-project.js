@@ -46,6 +46,7 @@ module.exports = {
       },
       createdBy: {
         type: Sequelize.INTEGER,
+        allowNull:'true',
         references: {
           model: 'user',
           key: 'id',
@@ -58,6 +59,9 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      deletedAt: {
+        type: Sequelize.DATE,
       }
     });
   },
