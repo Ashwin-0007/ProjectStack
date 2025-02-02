@@ -3,7 +3,7 @@ const { createProject, getAllProjects, getProjectById, updateProject, deleteProj
 const { authentication, restrictTo } = require('../controller/authController');
 const router = express.Router();
 
-router.post('/', authentication, restrictTo('0'),createProject);
+router.post('/create', authentication, restrictTo('0'),createProject);
 
 router.get('/',authentication, getAllProjects)
 

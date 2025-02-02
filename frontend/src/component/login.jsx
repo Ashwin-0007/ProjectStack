@@ -17,9 +17,10 @@ const Login = () => {
     });
 
     const data = await response.json();
+    localStorage.setItem("user_token", data.token);
     if (response.ok) {
       console.log("Login Successful:", data);
-      navigate("/dashboard");
+      navigate("/");
     } else {
       alert(data.message || "Login failed");
     }
@@ -29,8 +30,11 @@ const Login = () => {
     <div className="flex h-screen items-center justify-center bg-gray-900 text-white">
       <div className="flex w-4/5 max-w-5xl bg-gray-800 rounded-lg shadow-lg overflow-hidden">
         {/* Left Section */}
-        <div className="w-1/2 bg-cover bg-center p-10 flex items-center justify-center" style={{ backgroundImage: "url('/path-to-your-image.jpg')" }}>
-          <h2 className="text-xl font-semibold text-center">Capturing Moments, Creating Memories</h2>
+        <div className="w-1/2 bg-cover bg-center p-10 flex items-center justify-center" style={{ backgroundImage: "url('images/login-signup-bg.png')" }}>
+        <span>
+          <span className="text-3xl font-medium text-slate-400">LogIn to </span>
+          <div><strong className="text-amber-900 text-4xl">Project Stack</strong></div>
+        </span>
         </div>
 
         {/* Right Section */}
@@ -60,11 +64,6 @@ const Login = () => {
           <p className="mt-4 text-center">
             Don't have an account? <span className="text-purple-400 cursor-pointer" onClick={() => navigate("/signup")}>Sign up</span>
           </p>
-
-          <div className="flex justify-center mt-4 space-x-4">
-            <button className="w-1/2 p-3 bg-gray-700 hover:bg-gray-600 rounded-md">Sign In with Google</button>
-            <button className="w-1/2 p-3 bg-gray-700 hover:bg-gray-600 rounded-md">Sign In with Apple</button>
-          </div>
         </div>
       </div>
     </div>
