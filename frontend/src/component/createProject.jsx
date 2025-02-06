@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const CreateProject = () => {
   const [title, setTitle] = useState('');
@@ -11,6 +12,7 @@ const CreateProject = () => {
   const [tags, setTags] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,6 +48,8 @@ const CreateProject = () => {
       const data = await response.json();
       if (response.ok) {
         setMessage('Project created successfully!');
+        localStorage.setItem("project_id", data.data.id);
+        navigate(`/projects/${data.data.id}`);
       } else {
         setMessage(data.message || 'Failed to create project');
       }

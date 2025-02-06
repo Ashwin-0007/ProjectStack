@@ -4,6 +4,7 @@ import Signup from "../src/component/signup";
 import ProjectList from "./component/dashBoard";
 import CreateProject from "./component/createProject";
 import NavbarComponent from "./component/Navbar";
+import ProjectDetails from "./component/projectDetail";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/create-project" element={<CreateProject />} />
+            {/* <Route path="/projects/:projectId" element={<ProjectDetails />} /> */}
           </Routes>
         </Router>
       </div>
