@@ -11,13 +11,13 @@ function App() {
       <div className="fixed top-0 left-0 w-full z-10">
         <NavbarComponent />
       </div>
-      <div className="pt-20"> {/* Add padding to make space for the navbar */}
+      <div className="pt-20">
         <Router>
           <Routes>
             <Route path="/" element={<ProjectList />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/create" element={<CreateProject />} />
+            <Route path="/create-project" element={<CreateProject />} />
           </Routes>
         </Router>
       </div>

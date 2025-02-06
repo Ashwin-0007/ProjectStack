@@ -6,9 +6,9 @@ function NavbarComponent() {
   return (
     <nav className="bg-blue-200 p-4">
       <div className="max-w-screen-xl mx-auto flex justify-between items-center">
-        <a href="#" className="text-2xl font-bold text-green-700">
-          <strong className='text-green-700'>Project</strong>
-          <strong className='text-amber-700'>Stack</strong>
+        <a href="/" className="text-2xl font-bold text-green-700">
+          <strong className='text-green-700 font-serif'>Project</strong>
+          <strong className='text-amber-700 font-serif'>Stack</strong>
         </a>
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -17,7 +17,7 @@ function NavbarComponent() {
           <span className="material-icons">menu</span>
         </button>
         <div className={`${isOpen ? 'block' : 'hidden'} lg:flex space-x-6`}>
-          <a href="/" className="text-gray-800 hover:text-gray-600">Home</a>
+          <a href="/create-project" className="text-gray-800 hover:text-gray-600">Add Project</a>
           <a href="/login" className="text-gray-800 hover:text-gray-600">Login</a>
           <a href="/signup" className="text-gray-400">Signup</a>
         </div>

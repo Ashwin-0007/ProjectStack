@@ -15,37 +15,35 @@ const CreateProject = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    const token = localStorage.getItem('token'); // Ensure token is retrieved
+    const token = localStorage.getItem('user_token');
     if (!token) {
       setMessage('User not authenticated');
       setLoading(false);
       return;
     }
-
+  
     const newProject = {
       title,
-      productImage,
-      price,
+      productImage: productImage.split(','),
+      price: parseFloat(price),
       shortDescription,
       description,
       productUrl,
-      category,
-      tags,
+      category: category.split(','),
+      tags: tags.split(','),
     };
-
+  
     try {
-      const response = await fetch('http://localhost:8000/api/v1/projects/create', {
-        method: 'POST', // Changed to POST
+      const response = await fetch('http://localhost:8000/api/v1/projects/create-project', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(newProject),
       });
-
+  
       const data = await response.json();
-
       if (response.ok) {
         setMessage('Project created successfully!');
       } else {
@@ -55,10 +53,9 @@ const CreateProject = () => {
       console.error('Error creating project:', error);
       setMessage('Error creating project');
     }
-
+  
     setLoading(false);
   };
-
   return (
     <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg text-black">
       <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">Create New Project</h2>
