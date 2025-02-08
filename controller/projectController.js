@@ -1,5 +1,6 @@
 const project = require("../db/models/project");
 const user = require("../db/models/user");
+const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
 const createProject = catchAsync( async(req, res, next) => {
@@ -37,6 +38,7 @@ const getAllProjects = catchAsync(async (req, res, next) => {
 const getProjectById = catchAsync(async (req, res, next) => {
     const projectId = await req.params.id;
     const result = await project.findByPk(projectId, {include: user});
+    console.log("==========>>>>>", result)
     if(!result) {
         return next(new AppError("Invalid project id", 400));
     }
