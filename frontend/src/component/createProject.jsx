@@ -48,7 +48,6 @@ const CreateProject = () => {
       const data = await response.json();
       if (response.ok) {
         setMessage('Project created successfully!');
-        localStorage.setItem("project_id", data.data.id);
         navigate(`/projects/${data.data.id}`);
       } else {
         setMessage(data.message || 'Failed to create project');
