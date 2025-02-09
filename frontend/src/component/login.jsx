@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
-const Login = ({setIsAuthenticated}) => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -19,8 +19,6 @@ const Login = ({setIsAuthenticated}) => {
     const data = await response.json();
     localStorage.setItem("user_token", data.token);
     if (response.ok) {
-      console.log("Login Successful:", data);
-      setIsAuthenticated(true);
       navigate("/");
     } else {
       alert(data.message || "Login failed");

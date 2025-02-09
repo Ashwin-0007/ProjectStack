@@ -8,25 +8,24 @@ import ProjectDetails from "./component/projectDetail";
 import { useState } from "react";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+  const [searchBar, setSearchBar] = useState("");
   return (
-    <div className="relative w-full">
-      <div className="fixed top-0 left-0 w-full z-10">
-        <NavbarComponent isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
-      </div>
-      <div className="pt-30">
-        <Router>
+    <Router>
+      <div className="relative w-full">
+        <div className="fixed top-0 left-0 w-full z-10">
+          <NavbarComponent setSearchBar={setSearchBar} />
+        </div>
+        <div className="pt-30">
           <Routes>
-            <Route path="/" element={<ProjectList />} />
-            <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated}/>} />
+            <Route path="/" element={<ProjectList searchBar={searchBar} />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/create-project" element={<CreateProject />} />
             <Route path="/projects/:projectId" element={<ProjectDetails />} />
           </Routes>
-        </Router>
+        </div>
       </div>
-    </div>
+    </Router>
   );
 }
 

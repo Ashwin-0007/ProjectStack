@@ -1,12 +1,18 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function NavbarComponent({ isAuthenticated, setIsAuthenticated }) {
+function NavbarComponent({setSearchBar}) {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
   const handleLogout = (e) => {
     e.preventDefault();
     localStorage.removeItem("user_token");
-    setIsAuthenticated(false);
+    navigate("/login");
   };
+
+  const isAuthenticated = localStorage.getItem("user_token");
+
   return (
     <nav className="bg-gradient-to-r from-blue-200 to-purple-200 p-4 shadow-lg">
       <div className="max-w-screen-xl mx-auto flex justify-between items-center">
@@ -41,17 +47,16 @@ function NavbarComponent({ isAuthenticated, setIsAuthenticated }) {
             <>
               <a
                 href="/create-project"
-                className="block lg:inline-block text-gray-800 hover:text-purple-700 hover:bg-purple-100 px-4 py-2 rounded-lg transition-colors duration-300"
+                className="block lg:inline-block hover:text-purple-700 hover:bg-purple-100 px-4 py-2 rounded-lg transition-colors duration-300"
               >
                 Add Project
               </a>
-              <a
-                href="/"
-                className="block lg:inline-block text-gray-800 hover:text-blue-700 hover:bg-blue-100 px-4 py-2 rounded-lg transition-colors duration-300"
+              <div
+                className="block lg:inline-block text-[#646CFF] font-medium hover:text-blue-700 hover:bg-blue-100 px-4 py-2 rounded-lg transition-colors duration-300"
                 onClick={(e) => handleLogout(e)}
               >
                 Logout
-              </a>
+              </div>
             </>
           ) : (
             <>
@@ -77,6 +82,7 @@ function NavbarComponent({ isAuthenticated, setIsAuthenticated }) {
             <input
               type="search"
               placeholder="Search"
+              onChange={(e) => setSearchBar(e.target.value)}
               className="px-4 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-green-500 rounded-l-lg"
             />
             <button

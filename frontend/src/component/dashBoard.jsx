@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const ProjectList = () => {
+const ProjectList = ({ searchBar}) => {
   const [projects, setProjects] = useState([]);
+  const [filteredProjects, setFilteredProjects] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,6 +21,7 @@ const ProjectList = () => {
         const data = await response.json();
         if (data.status === "success") {
           setProjects(data.data);
+          setFilteredProjects(data.data);
         }
       } catch (error) {
         console.error("Error fetching projects:", error);
@@ -28,6 +30,13 @@ const ProjectList = () => {
 
     fetchProjects();
   }, []);
+
+  useEffect(() => {
+    const filtered = projects.filter((project) =>
+      project.title.toLowerCase().includes(searchBar.toLowerCase())
+    );
+    setFilteredProjects(filtered);
+  }, [searchBar, projects]);
 
   const handleSelectedProject = (projectId) => {
     navigate(`/projects/${projectId}`);
@@ -47,15 +56,31 @@ const ProjectList = () => {
       const data = await response.json();
       if (data.status === "success") {
         setProjects((prevProjects) => prevProjects.filter((project) => project.id !== projectId));
+        setFilteredProjects((prevProjects) => prevProjects.filter((project) => project.id !== projectId));
       }
     } catch (error) {
       console.error("Error deleting project:", error);
     }
   };
 
+  const highlightText = (text, search) => {
+    if (!search) return text;
+    const regex = new RegExp(`(${search})`, "gi");
+    const parts = text.split(regex);
+    return parts.map((part, index) =>
+      regex.test(part) ? (
+        <span key={index} className="bg-yellow-300 rounded">
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    );
+  };
+
   return (
     <div className="container mx-auto p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {projects.map((project) => (
+      {filteredProjects.map((project) => (
         <div
           key={project.id}
           className="bg-white shadow-lg rounded-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl"
@@ -67,9 +92,10 @@ const ProjectList = () => {
             className="w-full h-48 object-cover transform transition-all duration-300 hover:scale-110"
           />
           <div className="p-4">
-            <h2 className="text-xl font-semibold text-gray-800 hover:text-blue-600 transition-colors duration-300">
-              {project.title}
-            </h2>
+            <h2
+              className="text-xl font-semibold text-gray-800 hover:text-blue-600 transition-colors duration-300"
+              
+            >{highlightText(project.title, searchBar)}</h2>
             <p className="text-gray-600 mt-2">{project.shortDescription}</p>
             <p className="text-gray-900 font-bold mt-2">${project.price}</p>
             <div className="flex justify-between mt-4">
